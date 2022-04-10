@@ -39,11 +39,11 @@ jobs:
             --publish 9000:9000 \
             --restart on-failure:3 \
             capric98/fc-web:latest
- 
-          nohup docker logs fc-web -f 1>/tmp/docker.log 2>&1 &
-
 
           pip install --upgrade requests
+          sudo chmod -R 777 ${tmp_dir}
+          nohup docker logs fc-web -f 1>/tmp/docker.log 2>&1 &
+
           echo -e "import requests
 
           ulist = [
@@ -52,13 +52,12 @@ jobs:
           ]
 
           for u in ulist:
-            print(f\"[GET] {u}\ ... ", end=None)
+            print(f\"[GET] {u}\ ... \", end=None)
             resp = requests.get(u)
             resp.raise_for_status()
             print(resp.status_code)
           " | python
 
-          sudo chmod -R 777 ${tmp_dir}
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
