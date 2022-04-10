@@ -23,8 +23,7 @@ jobs:
 
       - name: Build Image
         run: |
-          docker build Dockerfile \
-            -t 'capric98/fc-web:latest'
+          docker build -t 'capric98/fc-web:latest' .
 
       - name: check
         run: |
