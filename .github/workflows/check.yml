@@ -52,10 +52,9 @@ jobs:
           ]
 
           for u in ulist:
-            print(f\"[GET] {u}\ ... \", end=None)
             resp = requests.get(u)
+            print(f\"[GET] {u} ...\", resp.status_code)
             resp.raise_for_status()
-            print(resp.status_code)
           " | python
 
 
@@ -67,4 +66,5 @@ jobs:
             ${{ env.TMP_DIR }}
             /tmp/fc-web.tar.gz
             /tmp/docker.log
+            !/tmp/**/session
         if: success() || failure()
