@@ -6,7 +6,7 @@ on:
       - 'Dockerfile'
       - 'bootstrap.sh'
       - '*.conf'
-      - 'nas/conf.d/**"
+      - 'nas/conf.d/**'
       - '.github/workflows/check.yml'
 
 jobs:
