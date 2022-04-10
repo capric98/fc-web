@@ -38,6 +38,8 @@ jobs:
             --publish 9000:9000 \
             --restart on-failure:3 \
             capric98/fc-web:latest
+ 
+          nohup docker logs fc-web -f 1>/tmp/docker.log 2>&1 &
 
 
           pip install --upgrade requests
@@ -49,6 +51,7 @@ jobs:
           ]
 
           for u in ulist:
+            print(f\"[GET] {u}\")
             requests.get(u).raise_for_status()
           " | python
 
@@ -59,4 +62,5 @@ jobs:
           path: |
             ${{ env.TMP_DIR }}
             /tmp/fc-web.tar.gz
+            /tmp/docker.log
         if: success() || failure()
