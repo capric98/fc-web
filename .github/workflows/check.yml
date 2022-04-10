@@ -29,6 +29,7 @@ jobs:
       - name: check
         run: |
           tmp_dir=$(mktemp -d)
+          chmod -R 777 ${tmp_dir}
           echo "TMP_DIR=${tmp_dir}" >> $GITHUB_ENV
 
           docker run \
