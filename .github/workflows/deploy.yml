@@ -1,0 +1,44 @@
+name: Build & Deploy
+
+on:
+  push:
+    branches: [ "deploy" ]
+
+jobs:
+  RUN:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Install Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: 17.6.0
+
+    - name: Install Serverless-Devs
+      run: |
+        npm install @serverless-devs/s -g
+        s --version
+
+    - name: Init Serverless-Devs
+      env:
+        URL: ${{ secrets.TEMPLATE_URL }}
+        ACCOUNT_ID: ${{ secrets.ACCOUNT_ID }}
+        ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY_ID }}
+        ACCESS_KEY_SECRET: ${{ secrets.ACCESS_KEY_SECRET }}
+      run: |
+        s config add --AccountID ${ACCOUNT_ID} --AccessKeyID ${ACCESS_KEY_ID} --AccessKeySecret ${ACCESS_KEY_SECRET} --access actions
+        curl -sSL "${URL}" -o s.yaml
+        sed -i "s|{{ access }}|actions|g" s.yaml
+        sed -i "s|codeUri: '.*'|codeUri: './src'|g" s.yaml
+        cat s.yaml
+
+    - name: Build FC
+      run: |
+        s build --dockerfile=./Dockerfile
+
+    - name: Deploy FC
+      run: |
+        s deploy --use-local --assume-yes --access actions

@@ -1,0 +1,59 @@
+name: check
+
+on:
+  push:
+    paths:
+      - 'Dockerfile'
+      - 'bootstrap.sh'
+      - '*.conf'
+      - 'nas/conf.d/**"
+      - '.github/workflows/check.yml'
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.10'
+
+      - name: Build Image
+        run: |
+          docker build Dockerfile \
+            -t 'capric98/fc-web:latest'
+
+      - name: check
+        run: |
+          tmp_dir=$(mktemp -d)
+          echo "TMP_DIR=${tmp_dir}" >> $GITHUB_ENV
+
+          docker run \
+            --detach \
+            --name fc-web \
+            --volume ${tmp_dir}:/home/app \
+            --publish 9000:9000 \
+            --restart on-failure:3 \
+            capric98/fc-web:latest
+
+
+          echo -e "import requests
+
+          ulist = [
+            \"http://127.0.0.1:9000/generate_204\",
+            \"http://127.0.0.1:9000/manage/tfm.php?p=\",
+          ]
+
+          for u in ulist:
+            requests.get(u).raise_for_status()
+          " | python
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: app
+          path: ${{ env.TMP_DIR }}
+        if: success() || failure()
