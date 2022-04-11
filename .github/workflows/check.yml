@@ -27,7 +27,7 @@ jobs:
           docker build -t 'capric98/fc-web:latest' .
           docker save capric98/fc-web:latest | gzip > /tmp/fc-web.tar.gz
 
-      - name: check
+      - name: Check
         run: |
           tmp_dir=$(mktemp -d)
           chmod -R 777 ${tmp_dir}
