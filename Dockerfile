@@ -52,7 +52,7 @@ RUN sed -i "s|post_max_size|; post_max_size|g" /etc/php${PHP_MAIN_VER}/php.ini
 RUN sed -i "s|upload_max_filesize|; upload_max_filesize|g" /etc/php${PHP_MAIN_VER}/php.ini
 
 RUN echo "session.save_path = "${MOUNT_POINT}/logs/session"" >> /etc/php${PHP_MAIN_VER}/php.ini
-RUN ln -s "${MOUNT_POINT}/conf.d/php/ini" /usr/share/php
+RUN ln -s "${MOUNT_POINT}/conf.d/php/ini" /usr/share/php${PHP_MAIN_VER}
 
 # Persistent files
 COPY nas /usr/share/nas
