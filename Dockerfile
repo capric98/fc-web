@@ -45,8 +45,14 @@ RUN sed -i "s|\${MOUNTPOINT}|${MOUNT_POINT}|g" /etc/nginx/nginx.conf
 # Configure PHP
 COPY php-fpm.conf /etc/php${PHP_MAIN_VER}/php-fpm.d/www.conf
 RUN sed -i "s|\${MOUNTPOINT}|${MOUNT_POINT}|g" /etc/php${PHP_MAIN_VER}/php-fpm.d/www.conf
+
+RUN sed -i "s|expose_php|; expose_php|g" /etc/php${PHP_MAIN_VER}/php.ini
+RUN sed -i "s|memory_limit|; memory_limit|g" /etc/php${PHP_MAIN_VER}/php.ini
+RUN sed -i "s|post_max_size|; post_max_size|g" /etc/php${PHP_MAIN_VER}/php.ini
+RUN sed -i "s|upload_max_filesize|; upload_max_filesize|g" /etc/php${PHP_MAIN_VER}/php.ini
+
 RUN echo "session.save_path = "${MOUNT_POINT}/logs/session"" >> /etc/php${PHP_MAIN_VER}/php.ini
-RUN echo "include_path = \".:/usr/share/php8:${MOUNT_POINT}/php/ini\"" >> /etc/php${PHP_MAIN_VER}/php.ini
+RUN ln -s "${MOUNT_POINT}/conf.d/php/ini" /usr/share/php
 
 # Persistent files
 COPY nas /usr/share/nas
