@@ -60,8 +60,8 @@ RUN chmod +x /bootstrap
 RUN chown -R ${NAS_UID}:${NAS_GID} \
   /bootstrap \
   /usr/share/nas \
-  /usr/share/nginx /usr/share/php${PHP_MAIN_VER} \
-  /var/lib/nginx /etc/nginx /etc/php${PHP_MAIN_VER}
+  /etc/nginx /usr/share/nginx /var/lib/nginx \
+  /etc/php${PHP_MAIN_VER}
 
 # Expose the service
 EXPOSE ${FC_PORT}
