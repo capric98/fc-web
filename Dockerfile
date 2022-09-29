@@ -1,4 +1,4 @@
-FROM alpine:3.15
+FROM alpine:latest
 LABEL GitRepo="https://github.com/capric98/fc-web"
 
 ARG MOUNT_POINT=/home/app
