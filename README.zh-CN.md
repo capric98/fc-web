@@ -54,7 +54,7 @@ TEMPLATE_URL="{{ 外链地址 }}"
 
 ## 部署完成后
 
-默认可以通过`/manage/tfm.php`来管理NAS挂载目录内的文件。
+默认可以通过`/manage/tinyfilemanager.php`来管理NAS挂载目录内的文件。
 
 **请注意，自带的TineFileManager关闭了身份验证功能，这可能会导致严重的安全问题，请在完成第一次登陆后，立即编辑tfm.php开启验证并修改用户密码！**
 

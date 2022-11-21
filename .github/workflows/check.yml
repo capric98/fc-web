@@ -49,7 +49,7 @@ jobs:
 
           ulist = [
             \"http://127.0.0.1:9000/generate_204\",
-            \"http://127.0.0.1:9000/manage/tfm.php?p=\",
+            \"http://127.0.0.1:9000/manage/tinyfilemanager.php?p=\",
           ]
 
           for u in ulist:

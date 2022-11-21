@@ -37,6 +37,7 @@ jobs:
 
     - name: Build FC
       run: |
+        git clone https://github.com/prasathmani/tinyfilemanager nas/manage
         s build --dockerfile=./Dockerfile
 
     - name: Deploy FC
