@@ -24,6 +24,7 @@ jobs:
 
       - name: Build Image
         run: |
+          git clone https://github.com/prasathmani/tinyfilemanager nas/manage
           docker build -t 'capric98/fc-web:latest' .
           docker save capric98/fc-web:latest | gzip > /tmp/fc-web.tar.gz
 
