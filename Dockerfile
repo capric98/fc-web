@@ -7,7 +7,7 @@ ARG NAS_GID=10003
 ARG FC_PORT=9000
 
 ARG PHP_VER="php81"
-ARG PHP_MAIN_VER="8"
+ARG PHP_MAIN_VER="81"
 
 # timezone
 RUN apk add --no-cache tzdata
